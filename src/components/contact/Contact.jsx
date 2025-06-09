@@ -46,7 +46,7 @@ const Contact = () => {
 
       <form
         onSubmit={onSubmit}
-        className="max-w-2xl mx-auto text-gray-600 pt-8"
+        className="max-w-2xl mx-auto px-4 text-gray-600 pt-8"
       >
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/2 text-left">
