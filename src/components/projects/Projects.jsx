@@ -1,9 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { assets, projectsData } from "../../assets/assets";
 
 const Projects = () => {
-  const [currentIndex,setCurrentIndex] = useState(0);
-  const [cartToShow,setCartToShow] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [cartToShow, setCartToShow] = useState(1);
+
+  useEffect(() => {
+    const updateCardsToShow = () => {
+      if (window.innerWidth >= 1024) {
+        setCartToShow(projectsData.length);
+      } else {
+        setCartToShow(1);
+      }
+    };
+    updateCardsToShow();
+    window.addEventListener("resize", updateCardsToShow);
+    return () => window.removeEventListener("resize", updateCardsToShow);
+  }, []);
+
+  const nextProject = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % projectsData.length);
+  };
+  const prevProject = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? projectsData.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
     <div
       id="Projects"
@@ -21,12 +44,14 @@ const Projects = () => {
       {/* slider buttons */}
       <div className="flex justify-end mb-8">
         <button
+          onClick={prevProject}
           className="p-3 bg-gray-200 rounded-lg mr-2 "
           aria-label="Previos Project"
         >
           <img src={assets.left_arrow} alt="Previous" />
         </button>
         <button
+          onClick={nextProject}
           className="p-3 bg-gray-200 rounded-lg mr-2 "
           aria-label="Next Project"
         >
@@ -35,10 +60,19 @@ const Projects = () => {
       </div>
       {/* project slider container  */}
       <div className="overflow-hidden">
-        <div className="flex gap-8 transition-transform duation-500 ease-in-out">
+        <div
+          className="flex gap-8 transition-transform duation-500 ease-in-out"
+          style={{
+            transform: `translateX(-${(currentIndex * 100) / cartToShow}%)`,
+          }}
+        >
           {projectsData.map((project, index) => (
             <div key={index} className="relative flex-shrink-0 w-full sm:w-1/4">
-              <img src={project.image} alt={project.title} className="w-full h-auto mb-14"/>
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-auto mb-14"
+              />
               <div className="absolute bottom-5 left-0 right-0 flex justify-center ">
                 <div className="inline-block bg-white w-3/4 px-4 py-2 shadow-md">
                   <h2 className="text-xl text-gray-800 font-semibold">
