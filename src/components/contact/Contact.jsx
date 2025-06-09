@@ -1,5 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 const Contact = () => {
   const [result, setResult] = React.useState("");
@@ -24,13 +25,17 @@ const Contact = () => {
       event.target.reset();
     } else {
       console.log("Error", data);
-      toast.error(data.error)
+      toast.error(data.error);
       setResult("");
     }
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, x: -200 }}
+      transition={{ duration: 1 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
       id="Contact"
       className="container mx-auto py-10 lg:px-32 w-full overflow-hidden"
     >
@@ -79,11 +84,14 @@ const Contact = () => {
             required
           ></textarea>
         </div>
-        <button type="submit" className="block mt-5 mx-auto px-12 py-2 bg-blue-500 rounded text-white mb-12">
+        <button
+          type="submit"
+          className="block mt-5 mx-auto px-12 py-2 bg-blue-500 rounded text-white mb-12"
+        >
           {result ? result : "Send Message"}
         </button>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

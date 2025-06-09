@@ -1,9 +1,14 @@
 import { assets } from "../../assets/assets";
+import { motion } from "framer-motion";
 
 const About = () => {
   return (
-    <div
-        id="About"
+    <motion.div
+      initial={{ opacity: 0, x: 200 }}
+      transition={{ duration: 1 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      id="About"
       className="container mx-auto flex flex-col justify-center items-center p-14 md:px-20
     lg:px-32 w-full overflow-hidden"
     >
@@ -47,10 +52,12 @@ const About = () => {
             ever since the 1500s, when an unknown printer took a galley of type
             and scrambled it to make a type specimen book.
           </p>
-          <button className="px-6 py-2 bg-blue-500 rounded text-white">Learn more</button>
+          <button className="px-6 py-2 bg-blue-500 rounded text-white">
+            Learn more
+          </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
